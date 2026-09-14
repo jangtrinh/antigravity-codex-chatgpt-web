@@ -33,6 +33,13 @@ function normalizeModel(model) {
       return "chatgpt-web/medium";
     case "light":
       return "chatgpt-web/light";
+    case "think":
+      return "chatgpt-web/think";
+    case "luna":
+      return "chatgpt-web/luna";
+    case "zero-risk":
+    case "zerorisk":
+      return "chatgpt-web/zero-risk";
     case "astra":
     case "gpt-6-astra":
       return "gpt-6-astra";
@@ -127,14 +134,20 @@ const TOOLS = [
             "chatgpt-web/high",
             "chatgpt-web/medium",
             "chatgpt-web/light",
+            "chatgpt-web/think",
+            "chatgpt-web/luna",
+            "chatgpt-web/zero-risk",
             "pro",
             "xhigh",
             "high",
             "medium",
             "light",
+            "think",
+            "luna",
+            "zero-risk",
           ],
           default: "chatgpt-web/medium",
-          description: "Target ChatGPT Web reasoning model.",
+          description: "Target ChatGPT Web reasoning model (gpt-5.6-sol or gpt-5.6-luna).",
         },
         cwd: {
           type: "string",

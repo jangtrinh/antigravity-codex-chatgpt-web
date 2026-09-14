@@ -19,13 +19,16 @@ USAGE:
 
 OPTIONS:
     -m, --model <name>     Model name or alias:
-                             pro         - ChatGPT Pro (Highest reasoning depth)
-                             xhigh       - ChatGPT Web Extra High reasoning
-                             high        - ChatGPT Web High reasoning
-                             medium      - ChatGPT Web Medium (Default, balanced)
-                             light       - ChatGPT Web Light (Fastest response)
+                             pro         - ChatGPT Pro (gpt-5.6-sol ultra/max effort, requires Pro)
+                             xhigh       - ChatGPT Web Extra High (gpt-5.6-sol xhigh effort, requires Pro)
+                             high        - ChatGPT Web High (gpt-5.6-sol high effort)
+                             medium      - ChatGPT Web Medium (gpt-5.6-sol medium effort, default)
+                             light       - ChatGPT Web Instant (gpt-5.6-sol low effort, fastest)
+                             think       - ChatGPT Web Think (gpt-5.6-luna medium effort)
+                             luna        - ChatGPT Web Luna (gpt-5.6-luna low effort)
+                             zero-risk   - ChatGPT Web Zero Risk (manual browser interaction)
                              astra       - Codex Native (gpt-6-astra coding model)
-                           Or full model name: chatgpt-web/pro, gpt-6-astra, etc.
+                            Or full model name: chatgpt-web/pro, gpt-6-astra, etc.
     -s, --status           Check bridge service status and port 17841 connectivity.
     -v, --version          Print version information.
     -h, --help             Show this help message.
@@ -70,6 +73,9 @@ while [[ "$#" -gt 0 ]]; do
                 high) MODEL="chatgpt-web/high" ;;
                 medium) MODEL="chatgpt-web/medium" ;;
                 light) MODEL="chatgpt-web/light" ;;
+                think) MODEL="chatgpt-web/think" ;;
+                luna) MODEL="chatgpt-web/luna" ;;
+                zero-risk|zerorisk) MODEL="chatgpt-web/zero-risk" ;;
                 astra|gpt-6-astra) MODEL="gpt-6-astra" ;;
                 *) MODEL="$2" ;;
             esac

@@ -81,14 +81,17 @@ graph TD
 
 ## Model Comparison Matrix
 
-| Model Alias | Target Identifier | Speed | Reasoning Depth | Recommended Use Cases |
-| :--- | :--- | :---: | :---: | :--- |
-| **`pro`** | `chatgpt-web/pro` | Slow | **Maximum (O1/Pro)** | High-complexity architecture design, formal proofs, multi-system tradeoffs |
-| **`xhigh`** | `chatgpt-web/extra-high` | Moderate | Very High | Advanced mathematical modeling, complex algorithmic optimizations |
-| **`high`** | `chatgpt-web/high` | Moderate | High | In-depth code reviews, database indexing strategies, security audits |
-| **`medium`** | `chatgpt-web/medium` | Fast | Balanced *(Default)* | General programming queries, explanations, everyday problem solving |
-| **`light`** | `chatgpt-web/light` | Blazing Fast | Standard | Data reformatting, regex authoring, quick syntax conversions |
-| **`astra`** | `gpt-6-astra` | Fast | High Code Specialization | Codex Native deep coding, comprehensive unit test generation, AST refactors |
+| Model Alias | Target Identifier | Underlying Engine | Effort / Profile | Required Tier | Speed | Reasoning Depth | Recommended Use Cases |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| **`pro`** | `chatgpt-web/pro` | `gpt-5.6-sol` | `ultra` / `max` | **Pro Required** | Deliberate | **Maximum (Max Depth)** | Complex system architecture, formal proofs, multi-system tradeoffs |
+| **`xhigh`** | `chatgpt-web/extra-high` | `gpt-5.6-sol` | `xhigh` | **Pro Required** | Moderate | Very High | Advanced mathematical modeling, complex algorithmic optimizations |
+| **`high`** | `chatgpt-web/high` | `gpt-5.6-sol` | `high` | Plus / Pro | Moderate | High | In-depth code reviews, database indexing strategies, security audits |
+| **`medium`** | `chatgpt-web/medium` | `gpt-5.6-sol` | `medium` | Plus / Pro | Fast | Balanced *(Default)* | General programming queries, explanations, everyday problem solving |
+| **`light`** | `chatgpt-web/light` | `gpt-5.6-sol` | `low` (Instant) | Plus / Pro | Blazing Fast | Standard | Data reformatting, regex authoring, quick syntax conversions |
+| **`think`** | `chatgpt-web/think` | `gpt-5.6-luna` | `medium` | Plus / Pro | Moderate | Medium | Fallback reasoning for accounts/sessions on the Luna track |
+| **`luna`** | `chatgpt-web/luna` | `gpt-5.6-luna` | `low` (Instant) | Plus / Pro | Fast | Standard | Fallback instant response for accounts without the Sol selector |
+| **`zero-risk`** | `chatgpt-web/zero-risk` | Manual Browser | Manual | Plus / Pro | Interactive | User-controlled | Manual browser submission mode where prompt input is verified in the UI |
+| **`astra`** | `gpt-6-astra` | `gpt-6-astra` | Codex Native | Codex Daemon | Fast | High Code Specialization | Codex Native deep coding, comprehensive unit test generation, AST refactors |
 
 ---
 
@@ -243,8 +246,24 @@ cat src/auth.ts | codex-web -m high "Rà soát lỗ hổng bảo mật và đề
 ### 2. Sử dụng bên trong phiên Antigravity
 
 Antigravity có thể trực tiếp gọi các công cụ:
-- `ask_chatgpt_web`: Nhận các tham số `prompt`, `model` (`pro`, `high`, `medium`, `light`).
+- `ask_chatgpt_web`: Nhận các tham số `prompt`, `model` (`pro`, `xhigh`, `high`, `medium`, `light`, `think`, `luna`, `zero-risk`).
 - `ask_codex_native`: Nhận các tham số `prompt`, `model` (`gpt-6-astra`).
+
+---
+
+## Bảng So Sánh Các Model (Thế hệ GPT-5.6 / GPT-6)
+
+| Model Alias | Mã Định Danh | Engine Nền Tảng | Mức Suy Luận | Yêu Cầu Gói | Tốc Độ | Độ Sâu Tư Duy | Mục Đích Khuyên Dùng |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| **`pro`** | `chatgpt-web/pro` | `gpt-5.6-sol` | `ultra` / `max` | **Cần Pro** | Chậm | **Cực Sâu (Tối Đa)** | Thiết kế hệ thống lớn, chứng minh toán học, giải quyết lỗi trừu tượng |
+| **`xhigh`** | `chatgpt-web/extra-high` | `gpt-5.6-sol` | `xhigh` | **Cần Pro** | Vừa | Rất Sâu | Thuật toán tối ưu phức tạp, mô hình hóa dữ liệu chuyên sâu |
+| **`high`** | `chatgpt-web/high` | `gpt-5.6-sol` | `high` | Plus / Pro | Vừa | Sâu | Rà soát mã nguồn (code review), kiểm tra bảo mật, tối ưu DB |
+| **`medium`** | `chatgpt-web/medium` | `gpt-5.6-sol` | `medium` | Plus / Pro | Nhanh | Cân Bằng *(Mặc định)* | Lập trình hàng ngày, giải thích logic, refactor tính năng |
+| **`light`** | `chatgpt-web/light` | `gpt-5.6-sol` | `low` (Instant) | Plus / Pro | Rất Nhanh | Tiêu Chuẩn | Chuyển đổi cú pháp, regex, sinh code boilerplate tức thì |
+| **`think`** | `chatgpt-web/think` | `gpt-5.6-luna` | `medium` | Plus / Pro | Vừa | Trung Bình | Suy luận dự phòng cho các tài khoản chạy track Luna |
+| **`luna`** | `chatgpt-web/luna` | `gpt-5.6-luna` | `low` (Instant) | Plus / Pro | Nhanh | Tiêu Chuẩn | Phản hồi nhanh cho tài khoản chưa có bộ chọn model Sol |
+| **`zero-risk`** | `chatgpt-web/zero-risk` | Trình duyệt thủ công | Thủ công | Plus / Pro | Tương Tác | Người dùng kiểm soát | Giữ nội dung prompt trên UI để người dùng duyệt thủ công trước khi gửi |
+| **`astra`** | `gpt-6-astra` | `gpt-6-astra` | Codex Native | Codex Daemon | Nhanh | Chuyên Biệt Coding | Sinh mã AST, refactor chuyên sâu, sinh unit test tự động |
 
 ---
 

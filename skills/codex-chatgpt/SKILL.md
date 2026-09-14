@@ -67,14 +67,17 @@ cat schema.prisma | codex-web -m high "Review schema indexing and surface query 
 
 ## Model Comparison Matrix
 
-| Model Tier | CLI / Tool Param | Speed | Reasoning Depth | Recommended Use Cases |
-| :--- | :--- | :---: | :---: | :--- |
-| **ChatGPT Pro** | `pro` / `chatgpt-web/pro` | Deliberate | **Maximum (O1/Pro)** | High-complexity system design, distributed consensus, abstract debugging |
-| **ChatGPT Extra High** | `xhigh` / `chatgpt-web/extra-high` | Moderate | Very High | Advanced mathematical modeling, complex algorithmic optimizations |
-| **ChatGPT High** | `high` / `chatgpt-web/high` | Moderate | High | Security audits, deep code reviews, database query plan optimization |
-| **ChatGPT Medium** | `medium` / `chatgpt-web/medium` | Fast | Balanced *(Default)* | General programming, conceptual explanations, standard problem solving |
-| **ChatGPT Light** | `light` / `chatgpt-web/light` | Blazing Fast | Standard | Syntax conversions, regex authoring, quick data reformatting |
-| **Codex GPT-6-Astra** | `astra` / `gpt-6-astra` | Fast | High Code Specialization | Codex Native deep coding, AST refactoring, automated test generation |
+| Model Tier | CLI / Tool Param | Underlying Engine | Effort Level | Required Tier | Speed | Reasoning Depth | Recommended Use Cases |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| **ChatGPT Pro** | `pro` / `chatgpt-web/pro` | `gpt-5.6-sol` | `ultra` / `max` | **Pro Required** | Deliberate | **Maximum (Max Depth)** | Complex distributed architectures, formal proofs, critical security modeling |
+| **ChatGPT Extra High** | `xhigh` / `chatgpt-web/extra-high` | `gpt-5.6-sol` | `xhigh` | **Pro Required** | Moderate | Very High | Advanced mathematical algorithms, formal verification, deep analytical tasks |
+| **ChatGPT High** | `high` / `chatgpt-web/high` | `gpt-5.6-sol` | `high` | Plus / Pro | Moderate | High | Security audits, in-depth code reviews, database query plan optimization |
+| **ChatGPT Medium** | `medium` / `chatgpt-web/medium` | `gpt-5.6-sol` | `medium` | Plus / Pro | Fast | Balanced *(Default)* | General programming, conceptual explanations, daily problem solving |
+| **ChatGPT Light** | `light` / `chatgpt-web/light` | `gpt-5.6-sol` | `low` (Instant) | Plus / Pro | Blazing Fast | Standard | Fast syntax conversions, regex authoring, quick boilerplate generation |
+| **ChatGPT Think** | `think` / `chatgpt-web/think` | `gpt-5.6-luna` | `medium` | Plus / Pro | Moderate | Medium | Fallback reasoning for accounts/sessions on the Luna track |
+| **ChatGPT Luna** | `luna` / `chatgpt-web/luna` | `gpt-5.6-luna` | `low` (Instant) | Plus / Pro | Fast | Standard | Fallback instant response for accounts without the Sol selector |
+| **ChatGPT Zero Risk** | `zero-risk` / `chatgpt-web/zero-risk` | Manual Browser | Manual | Plus / Pro | Interactive | User-controlled | Manual browser submission mode where prompt input is verified in the UI |
+| **Codex GPT-6-Astra** | `astra` / `gpt-6-astra` | `gpt-6-astra` | Codex Native | Codex Daemon | Fast | High Code Specialization | Codex Native deep coding, AST refactoring, automated test generation |
 
 ---
 
