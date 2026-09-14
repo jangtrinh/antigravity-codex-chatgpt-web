@@ -1,0 +1,37 @@
+{
+  "name": "ask_chatgpt_web",
+  "description": "Send prompts to ChatGPT Web via codex-chatgpt-web bridge with $0 API token costs. Supports deep reasoning, architecture design, code refactoring, and native image generation (returns Markdown image URLs). Supports models: chatgpt-web/pro (deepest reasoning), chatgpt-web/extra-high, chatgpt-web/high, chatgpt-web/medium (default), chatgpt-web/light (instant).",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "Question, coding instruction, or image generation prompt for ChatGPT Web."
+      },
+      "model": {
+        "type": "string",
+        "description": "Target ChatGPT Web reasoning model.",
+        "enum": [
+          "chatgpt-web/pro",
+          "chatgpt-web/extra-high",
+          "chatgpt-web/high",
+          "chatgpt-web/medium",
+          "chatgpt-web/light",
+          "pro",
+          "xhigh",
+          "high",
+          "medium",
+          "light"
+        ],
+        "default": "chatgpt-web/medium"
+      },
+      "cwd": {
+        "type": "string",
+        "description": "Optional contextual working directory (defaults to process.cwd())."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  }
+}

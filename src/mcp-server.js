@@ -118,7 +118,7 @@ const TOOLS = [
   {
     name: "ask_chatgpt_web",
     description:
-      "Send a prompt to ChatGPT Web via the codex-chatgpt-web bridge with zero API token billing. Supports models: chatgpt-web/pro (deepest reasoning), chatgpt-web/extra-high, chatgpt-web/high, chatgpt-web/medium (default), chatgpt-web/light (fastest).",
+      "Send a prompt to ChatGPT Web via the codex-chatgpt-web bridge with zero API token billing. Supports text reasoning, deep architecture, code refactoring, and native image generation (returns Markdown image URLs). Supports models: chatgpt-web/pro (deepest reasoning), chatgpt-web/extra-high, chatgpt-web/high, chatgpt-web/medium (default), chatgpt-web/light (fastest).",
     inputSchema: {
       type: "object",
       properties: {

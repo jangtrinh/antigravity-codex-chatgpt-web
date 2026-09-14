@@ -108,8 +108,9 @@ What the installer does automatically:
 1. Verifies Node.js (>= 18), `codex` CLI, and port `17841`.
 2. Makes scripts executable (`chmod +x`).
 3. Symlinks `bin/codex-web` into `~/.gemini/antigravity/bin/codex-web`.
-4. Installs the skill into `~/.gemini/config/skills/codex-chatgpt/SKILL.md`.
+4. Installs the skill into `~/.gemini/config/skills/codex-chatgpt/SKILL.md` and MCP schemas into `~/.gemini/antigravity/mcp/codex-chatgpt-web/`.
 5. Registers the MCP Server in `~/.gemini/config/mcp_config.json`.
+6. Automatically applies bridge optimizations (`scripts/patch-bridge.js`) for instant image generation completion and markdown URL capture.
 
 ---
 
@@ -121,8 +122,14 @@ What the installer does automatically:
 # Check connectivity and service health
 codex-web --status
 
+# Apply or verify bridge optimizations (fixes 60s image generation timeout)
+codex-web --patch
+
 # Quick query with balanced medium model
 codex-web "Explain how Node.js event loop handles Microtasks vs Macrotasks"
+
+# Generate an image using native ChatGPT Web tool (returns direct Markdown CDN URL)
+codex-web "Generate an image: 3D isometric glass cube on soft lilac studio background"
 
 # Query with Pro model for complex system design
 codex-web -m pro "Design an idempotent distributed payment webhook processor in Go"
@@ -217,8 +224,9 @@ Script sẽ tự động:
 1. Kiểm tra môi trường Node.js, lệnh `codex`, cổng `17841`.
 2. Phân quyền thực thi file.
 3. Tạo liên kết `codex-web` vào `~/.gemini/antigravity/bin/`.
-4. Cài đặt Skill vào `~/.gemini/config/skills/codex-chatgpt/`.
+4. Cài đặt Skill vào `~/.gemini/config/skills/codex-chatgpt/` và bộ schema MCP vào `~/.gemini/antigravity/mcp/codex-chatgpt-web/`.
 5. Đăng ký MCP Server vào `~/.gemini/config/mcp_config.json`.
+6. Tự động áp dụng bản vá tối ưu hóa bridge (`scripts/patch-bridge.js`) giúp sinh ảnh tức thì không bị lỗi timeout 60s và tự động trích xuất URL ảnh Markdown.
 
 ---
 
@@ -230,8 +238,14 @@ Script sẽ tự động:
 # Kiểm tra tình trạng kết nối tới bridge
 codex-web --status
 
+# Kiểm tra và áp dụng bản vá tối ưu bridge (sửa lỗi treo khi tạo ảnh)
+codex-web --patch
+
 # Hỏi nhanh với model cân bằng mặc định (Medium)
 codex-web "Tóm tắt 5 nguyên lý SOLID trong thiết kế phần mềm"
+
+# Tạo ảnh trực tiếp bằng công cụ native của ChatGPT Web (trả về link ảnh Markdown)
+codex-web "Tạo hình ảnh: Khối lập phương pha lê 3D phối cảnh isometric trên nền tím studio"
 
 # Sử dụng model Pro cho bài toán tư duy/thiết kế kiến trúc hệ thống
 codex-web -m pro "Thiết kế kiến trúc hệ thống Livestreaming chịu tải 500k CCU"

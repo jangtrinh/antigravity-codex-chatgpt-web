@@ -30,6 +30,7 @@ OPTIONS:
                              astra       - Codex Native (gpt-6-astra coding model)
                             Or full model name: chatgpt-web/pro, gpt-6-astra, etc.
     -s, --status           Check bridge service status and port 17841 connectivity.
+    -p, --patch            Apply optimizations to codex-chatgpt-web runtime (image generation & fast completion).
     -v, --version          Print version information.
     -h, --help             Show this help message.
 
@@ -37,6 +38,7 @@ EXAMPLES:
     codex-web "Explain quantum computing in one sentence"
     codex-web -m pro "Design a scalable distributed event-driven architecture"
     codex-web -m astra "Refactor this TypeScript function for maximum performance"
+    codex-web "Generate an image: Minimalist 3D isometric glass cube on lilac background"
     cat query.sql | codex-web -m light "Optimize this SQL query"
 HELP_EOF
 }
@@ -83,6 +85,11 @@ while [[ "$#" -gt 0 ]]; do
             ;;
         -s|--status)
             check_status
+            ;;
+        -p|--patch|--patch-bridge)
+            SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+            node "$SCRIPT_DIR/../scripts/patch-bridge.js"
+            exit 0
             ;;
         -v|--version)
             echo "codex-web version $VERSION"

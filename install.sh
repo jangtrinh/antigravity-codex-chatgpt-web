@@ -49,14 +49,19 @@ mkdir -p "$BIN_DIR"
 ln -sf "$REPO_DIR/bin/codex-web" "$BIN_DIR/codex-web"
 echo -e "  ✓ Linked $BIN_DIR/codex-web -> $REPO_DIR/bin/codex-web"
 
-# 4. Install Antigravity Skill
-echo -e "\n${BLUE}[4/5] Installing Antigravity Skill...${NC}"
+# 4. Install Antigravity Skill & MCP Schemas
+echo -e "\n${BLUE}[4/6] Installing Antigravity Skill & MCP Schemas...${NC}"
 mkdir -p "$SKILLS_DIR"
 cp -f "$REPO_DIR/skills/codex-chatgpt/SKILL.md" "$SKILLS_DIR/SKILL.md"
 echo -e "  ✓ Installed skill to $SKILLS_DIR/SKILL.md"
 
+ANTIGRAVITY_MCP_DIR="$HOME/.gemini/antigravity/mcp/codex-chatgpt-web"
+mkdir -p "$ANTIGRAVITY_MCP_DIR"
+cp -rf "$REPO_DIR/mcp/"* "$ANTIGRAVITY_MCP_DIR/"
+echo -e "  ✓ Installed MCP tool schemas to $ANTIGRAVITY_MCP_DIR"
+
 # 5. Register MCP Server in mcp_config.json
-echo -e "\n${BLUE}[5/5] Registering MCP server in $MCP_CONFIG...${NC}"
+echo -e "\n${BLUE}[5/6] Registering MCP server in $MCP_CONFIG...${NC}"
 mkdir -p "$(dirname "$MCP_CONFIG")"
 
 node -e "
@@ -86,6 +91,12 @@ fs.writeFileSync(configPath, JSON.stringify(config, null, 2) + '\n', 'utf8');
 " "$MCP_CONFIG" "$MCP_SERVER_SCRIPT"
 
 echo -e "  ✓ Registered 'codex-chatgpt-web' MCP server in $MCP_CONFIG"
+
+# 6. Apply Bridge Optimizations (Image Generation & Completion Patch)
+echo -e "\n${BLUE}[6/6] Applying Bridge Patches (Image Generation & Fast Completion)...${NC}"
+if [ -f "$REPO_DIR/scripts/patch-bridge.js" ]; then
+    node "$REPO_DIR/scripts/patch-bridge.js" || echo -e "${YELLOW}  ⚠ Notice: Bridge patch skipped or non-critical issue.${NC}"
+fi
 
 # Check bridge port connectivity
 echo -e "\n${BLUE}--- Bridge Connectivity Check ---${NC}"

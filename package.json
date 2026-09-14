@@ -12,6 +12,7 @@
     "test": "./bin/codex-web --help",
     "demo": "node scripts/demo-session.js",
     "demo:record": "vhs scripts/demo.tape",
+    "patch:bridge": "node scripts/patch-bridge.js",
     "install:bridge": "./install.sh",
     "uninstall:bridge": "./uninstall.sh"
   },

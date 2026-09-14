@@ -27,8 +27,8 @@ else
     echo -e "  - Binary link not found, skipping."
 fi
 
-# 2. Remove Skill directory
-echo -e "\n${BLUE}[2/3] Removing Antigravity Skill...${NC}"
+# 2. Remove Skill and MCP directories
+echo -e "\n${BLUE}[2/4] Removing Antigravity Skill & MCP Schemas...${NC}"
 if [ -d "$SKILLS_DIR" ]; then
     rm -rf "$SKILLS_DIR"
     echo -e "  ✓ Removed $SKILLS_DIR"
@@ -36,8 +36,16 @@ else
     echo -e "  - Skill directory not found, skipping."
 fi
 
+ANTIGRAVITY_MCP_DIR="$HOME/.gemini/antigravity/mcp/codex-chatgpt-web"
+if [ -d "$ANTIGRAVITY_MCP_DIR" ]; then
+    rm -rf "$ANTIGRAVITY_MCP_DIR"
+    echo -e "  ✓ Removed $ANTIGRAVITY_MCP_DIR"
+else
+    echo -e "  - MCP schema directory not found, skipping."
+fi
+
 # 3. Unregister from mcp_config.json
-echo -e "\n${BLUE}[3/3] Unregistering MCP server from $MCP_CONFIG...${NC}"
+echo -e "\n${BLUE}[3/4] Unregistering MCP server from $MCP_CONFIG...${NC}"
 if [ -f "$MCP_CONFIG" ]; then
     node -e "
 const fs = require('fs');
