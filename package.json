@@ -1,0 +1,32 @@
+{
+  "name": "antigravity-codex-chatgpt-web",
+  "version": "1.0.0",
+  "description": "Seamless bridge connecting Google DeepMind Antigravity agent to ChatGPT Web (Pro, Extra High, High, Medium, Light) and Codex Native (GPT-6-Astra) via codex-chatgpt-web",
+  "main": "src/mcp-server.js",
+  "bin": {
+    "codex-web": "./bin/codex-web",
+    "antigravity-codex-mcp": "./src/mcp-server.js"
+  },
+  "scripts": {
+    "start": "node src/mcp-server.js",
+    "test": "./bin/codex-web --help",
+    "install:bridge": "./install.sh",
+    "uninstall:bridge": "./uninstall.sh"
+  },
+  "keywords": [
+    "antigravity",
+    "google-deepmind",
+    "codex",
+    "chatgpt-web",
+    "mcp",
+    "mcp-server",
+    "json-rpc",
+    "gpt-6-astra",
+    "ai-agent"
+  ],
+  "author": "Jang",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

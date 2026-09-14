@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# codex-web: Fast CLI wrapper to query ChatGPT Web & Codex Native via codex-chatgpt-web bridge
+
+set -eo pipefail
+
+VERSION="1.0.0"
+DEFAULT_MODEL="chatgpt-web/medium"
+MODEL="$DEFAULT_MODEL"
+PROMPT=""
+BRIDGE_PORT=17841
+
+show_help() {
+    cat << 'HELP_EOF'
+codex-web - Fast CLI wrapper for ChatGPT Web & Codex Native Bridge
+
+USAGE:
+    codex-web [OPTIONS] "<prompt>"
+    cat file.txt | codex-web [OPTIONS]
+
+OPTIONS:
+    -m, --model <name>     Model name or alias:
+                             pro         - ChatGPT Pro (Highest reasoning depth)
+                             xhigh       - ChatGPT Web Extra High reasoning
+                             high        - ChatGPT Web High reasoning
+                             medium      - ChatGPT Web Medium (Default, balanced)
+                             light       - ChatGPT Web Light (Fastest response)
+                             astra       - Codex Native (gpt-6-astra coding model)
+                           Or full model name: chatgpt-web/pro, gpt-6-astra, etc.
+    -s, --status           Check bridge service status and port 17841 connectivity.
+    -v, --version          Print version information.
+    -h, --help             Show this help message.
+
+EXAMPLES:
+    codex-web "Explain quantum computing in one sentence"
+    codex-web -m pro "Design a scalable distributed event-driven architecture"
+    codex-web -m astra "Refactor this TypeScript function for maximum performance"
+    cat query.sql | codex-web -m light "Optimize this SQL query"
+HELP_EOF
+}
+
+check_status() {
+    echo "=== Codex ChatGPT Web Bridge Status ==="
+    echo -n "1. Checking 'codex' command... "
+    if command -v codex >/dev/null 2>&1; then
+        echo "OK ($(which codex))"
+    else
+        echo "FAILED (command 'codex' not found in PATH)"
+    fi
+
+    echo -n "2. Checking bridge port $BRIDGE_PORT... "
+    if nc -z -G 1 127.0.0.1 "$BRIDGE_PORT" 2>/dev/null || (echo > /dev/tcp/127.0.0.1/"$BRIDGE_PORT") >/dev/null 2>&1; then
+        echo "ONLINE (Port $BRIDGE_PORT is reachable)"
+    else
+        echo "OFFLINE (Port $BRIDGE_PORT is not responding. Ensure codex-chatgpt-web bridge is running)"
+    fi
+    exit 0
+}
+
+# Parse flags
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+        -m|--model)
+            if [[ -z "${2:-}" ]]; then
+                echo "Error: Missing argument for $1" >&2
+                exit 1
+            fi
+            case "$2" in
+                pro) MODEL="chatgpt-web/pro" ;;
+                xhigh|extra-high|extra_high) MODEL="chatgpt-web/extra-high" ;;
+                high) MODEL="chatgpt-web/high" ;;
+                medium) MODEL="chatgpt-web/medium" ;;
+                light) MODEL="chatgpt-web/light" ;;
+                astra|gpt-6-astra) MODEL="gpt-6-astra" ;;
+                *) MODEL="$2" ;;
+            esac
+            shift 2
+            ;;
+        -s|--status)
+            check_status
+            ;;
+        -v|--version)
+            echo "codex-web version $VERSION"
+            exit 0
+            ;;
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        *)
+            PROMPT="$*"
+            break
+            ;;
+    esac
+done
+
+# If no positional prompt, read from stdin if piped
+if [[ -z "$PROMPT" ]]; then
+    if [ ! -t 0 ]; then
+        PROMPT=$(cat)
+    fi
+fi
+
+if [[ -z "$PROMPT" ]]; then
+    show_help
+    exit 1
+fi
+
+exec codex exec --ephemeral --skip-git-repo-check -m "$MODEL" "$PROMPT" < /dev/null
