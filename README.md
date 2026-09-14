@@ -7,6 +7,10 @@
 
 > Seamless bridge connecting **Google DeepMind Antigravity** coding agent to **ChatGPT Web (Pro, Extra High, High, Medium, Light)** and **Codex Native (GPT-6-Astra)** via the [`miuuyy/codex-chatgpt-web`](https://github.com/miuuyy/codex-chatgpt-web) local service.
 
+<p align="center">
+  <img src="assets/demo.gif" alt="DeepMind Antigravity terminal session calling Codex ChatGPT Web" width="100%">
+</p>
+
 ---
 
 ## 🌐 Language Navigation / Chọn Ngôn Ngữ
@@ -20,6 +24,14 @@
 ## Overview
 
 `antigravity-codex-chatgpt-web` is a production-grade, zero-dependency bridge allowing **Google DeepMind Antigravity** agents to interact directly with your **ChatGPT Web (Pro / Plus)** subscription and **Codex Native** without incurring OpenAI API token costs.
+
+## 🎬 Terminal Demo
+
+The demo above captures an active terminal session:
+1. **Connectivity Check**: Running `codex-web --status` verifies local bridge service health at `127.0.0.1:17841`.
+2. **Antigravity Session Execution**: Running `agy "Ask ChatGPT Web Pro to optimize worker pool with Atomics"`.
+3. **MCP Tool Routing**: Antigravity detects the `codex-chatgpt-web` MCP server and dispatches via `ask_chatgpt_web` using the `chatgpt-web/pro` reasoning model.
+4. **Instant Zero-Cost Response**: Receives the deep reasoning explanation and typed implementation with **$0.00 token billing**.
 
 ### Key Highlights
 - **Zero API Token Billing**: Leverages existing ChatGPT Web subscriptions.
@@ -169,6 +181,14 @@ To cleanly remove the bridge, symlinks, skill, and MCP registration:
 ## Tổng Quan
 
 `antigravity-codex-chatgpt-web` là gói cầu nối hoàn chỉnh, độc lập và tối ưu cao giúp agent **Antigravity (Google DeepMind)** khai thác trực tiếp gói tài khoản **ChatGPT Web (Pro / Plus)** và **Codex Native** thông qua dịch vụ cục bộ [`miuuyy/codex-chatgpt-web`](https://github.com/miuuyy/codex-chatgpt-web).
+
+## 🎬 Demo Trực Quan
+
+Ảnh động phía trên mô phỏng trực quan một phiên làm việc thực tế từ Terminal:
+1. **Kiểm tra kết nối**: Lệnh `codex-web --status` xác nhận bridge đang hoạt động tại cổng `17841`.
+2. **Khởi chạy Antigravity**: Lệnh `agy "Ask ChatGPT Web Pro to optimize worker pool with Atomics"` gửi tác vụ bằng tiếng Anh.
+3. **Định tuyến MCP Tool**: Antigravity tự động kích hoạt tool `ask_chatgpt_web` với model `chatgpt-web/pro`.
+4. **Nhận kết quả tức thì**: Trả về phân tích sâu kèm mã nguồn TypeScript chuẩn hóa với **0đ chi phí token API**.
 
 ### Ưu Điểm Vượt Trội
 - **0 chi phí token API**: Tận dụng gói đăng ký ChatGPT Web sẵn có.

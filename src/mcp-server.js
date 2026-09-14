@@ -111,13 +111,13 @@ const TOOLS = [
   {
     name: "ask_chatgpt_web",
     description:
-      "Gửi prompt tới tài khoản ChatGPT Web thông qua bridge codex-chatgpt-web. Hỗ trợ các model: chatgpt-web/pro (suy luận sâu nhất), chatgpt-web/extra-high, chatgpt-web/high, chatgpt-web/medium (mặc định), chatgpt-web/light (nhanh nhất).",
+      "Send a prompt to ChatGPT Web via the codex-chatgpt-web bridge with zero API token billing. Supports models: chatgpt-web/pro (deepest reasoning), chatgpt-web/extra-high, chatgpt-web/high, chatgpt-web/medium (default), chatgpt-web/light (fastest).",
     inputSchema: {
       type: "object",
       properties: {
         prompt: {
           type: "string",
-          description: "Câu hỏi hoặc tác vụ cần gửi tới ChatGPT Web.",
+          description: "Question, task, or prompt to send to ChatGPT Web.",
         },
         model: {
           type: "string",
@@ -134,11 +134,11 @@ const TOOLS = [
             "light",
           ],
           default: "chatgpt-web/medium",
-          description: "Mô hình ChatGPT Web muốn sử dụng.",
+          description: "Target ChatGPT Web reasoning model.",
         },
         cwd: {
           type: "string",
-          description: "Thư mục ngữ cảnh làm việc (tùy chọn, mặc định là process.cwd()).",
+          description: "Optional contextual working directory (defaults to process.cwd()).",
         },
       },
       required: ["prompt"],
@@ -147,22 +147,22 @@ const TOOLS = [
   {
     name: "ask_codex_native",
     description:
-      "Gửi prompt tới Codex với mô hình coding chuyên sâu gpt-6-astra thông qua codex-chatgpt-web bridge.",
+      "Send a prompt to Codex Native utilizing the specialized coding model gpt-6-astra via the codex-chatgpt-web bridge.",
     inputSchema: {
       type: "object",
       properties: {
         prompt: {
           type: "string",
-          description: "Câu lệnh hoặc tác vụ lập trình chuyên sâu.",
+          description: "Coding or refactoring instruction for Codex Native.",
         },
         model: {
           type: "string",
           default: "gpt-6-astra",
-          description: "Mô hình Codex native (mặc định gpt-6-astra).",
+          description: "Codex native model identifier (defaults to gpt-6-astra).",
         },
         cwd: {
           type: "string",
-          description: "Thư mục ngữ cảnh làm việc.",
+          description: "Contextual working directory.",
         },
       },
       required: ["prompt"],

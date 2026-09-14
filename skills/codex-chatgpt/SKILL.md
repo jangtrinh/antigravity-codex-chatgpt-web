@@ -1,88 +1,91 @@
 ---
 name: codex-chatgpt
-description: "Sử dụng ChatGPT Web (Pro, Extra High, High, Medium, Light) hoặc Codex GPT-6-Astra thông qua codex-chatgpt-web bridge để giải quyết các bài toán suy luận, lập trình hoặc tham khảo góc nhìn từ OpenAI mà không tốn phí API token."
+description: "Leverage ChatGPT Web (Pro, Extra High, High, Medium, Light) or Codex Native (GPT-6-Astra) via the codex-chatgpt-web bridge for deep reasoning, system architecture, code generation, and independent code review with zero API token billing."
 ---
 
 # Codex ChatGPT Web Skill
 
-Skill này cho phép Antigravity kết nối và khai thác toàn bộ sức mạnh của tài khoản **ChatGPT Web (Pro / Plus)** và **Codex Native (GPT-6-Astra)** thông qua cầu nối `codex-chatgpt-web` đang chạy ngầm trên máy cục bộ (cổng `17841`).
+This skill enables Antigravity agents to harness the reasoning power of **ChatGPT Web (Pro / Plus)** and **Codex Native (GPT-6-Astra)** through the local `codex-chatgpt-web` background daemon (listening on port `17841`).
 
-## Khi Nào Nên Kích Hoạt Skill Này?
-- Khi bạn cần góc nhìn phản biện hoặc giải pháp từ mô hình OpenAI tiên tiến nhất (GPT-4o, ChatGPT Pro, GPT-6-Astra) hoàn toàn miễn phí token.
-- Khi cần phân tích sâu các bài toán thuật toán hóc búa, thiết kế kiến trúc hệ thống phân tán phức tạp (sử dụng tier `pro` hoặc `high`).
-- Khi cần rà soát mã nguồn (code review) độc lập hoặc sinh mã chuẩn hóa từ Codex Native.
-- Khi cần phản hồi nhanh gọn với tier `light` hoặc cân bằng với tier `medium`.
+## When to Activate This Skill
+
+- **Zero Token Cost Reasoning**: Tap into OpenAI's top-tier reasoning engines (ChatGPT Pro, GPT-6-Astra) without consuming OpenAI API credits.
+- **Deep Architectural & Algorithmic Analysis**: Tackle complex distributed systems, formal proofs, or high-concurrency memory models using `pro` or `xhigh` tiers.
+- **Independent Code Review & Generation**: Validate complex pull requests or generate unit test suites with native Codex (`astra` / `gpt-6-astra`).
+- **Balanced or Rapid Problem Solving**: Get immediate answers using `light` or balanced reasoning with `medium` (default).
 
 ---
 
-## Cách Sử Dụng Trong Antigravity Session
+## Usage in Antigravity Sessions
 
-### Cách 1: Gọi Qua MCP Tools (Khuyên dùng)
-Antigravity tự động nhận diện 2 công cụ MCP sau khi đăng ký `codex-chatgpt-web`:
+### Method 1: Via MCP Tools (Recommended)
+
+Antigravity automatically discovers the following MCP tools provided by `codex-chatgpt-web`:
 
 1. **`ask_chatgpt_web`**:
-   - `prompt`: Nội dung câu hỏi hoặc bài toán cần giải quyết.
-   - `model`: Chọn một trong các model:
-     - `chatgpt-web/pro` hoặc `pro`: Suy luận cấp độ cao nhất của ChatGPT Pro.
-     - `chatgpt-web/extra-high` hoặc `xhigh`: Mức suy luận cực cao (Deep Reasoning).
-     - `chatgpt-web/high` hoặc `high`: Suy luận chuyên sâu (High reasoning).
-     - `chatgpt-web/medium` hoặc `medium`: Mặc định, cân bằng giữa tốc độ và chất lượng.
-     - `chatgpt-web/light` hoặc `light`: Tốc độ phản hồi tức thì.
-   - `cwd`: (Tùy chọn) Thư mục làm việc hiện tại.
+   - `prompt`: Question or engineering problem sent to ChatGPT Web.
+   - `model`: Target reasoning profile:
+     - `chatgpt-web/pro` or `pro`: Maximum reasoning depth (O1/Pro engine).
+     - `chatgpt-web/extra-high` or `xhigh`: Extremely deep algorithmic reasoning.
+     - `chatgpt-web/high` or `high`: In-depth code reviews and architectural analysis.
+     - `chatgpt-web/medium` or `medium`: Balanced speed and reasoning *(default)*.
+     - `chatgpt-web/light` or `light`: Instant, low-latency response.
+   - `cwd`: (Optional) Contextual working directory.
 
 2. **`ask_codex_native`**:
-   - `prompt`: Tác vụ lập trình chuyên sâu gửi tới engine Codex.
-   - `model`: Mặc định là `gpt-6-astra`.
+   - `prompt`: Specialized coding or refactoring task for Codex Native.
+   - `model`: Defaults to `gpt-6-astra`.
+   - `cwd`: (Optional) Working directory for context.
 
 ---
 
-### Cách 2: Gọi Trực Tiếp Từ CLI `codex-web`
+### Method 2: Direct Terminal CLI (`codex-web`)
 
-CLI `codex-web` đã được tối ưu hóa cho phép agent hoặc người dùng chạy nhanh từ terminal:
+The bundled `codex-web` executable allows fast queries and shell piping:
 
 ```bash
-# 1. Gọi mặc định (Medium - cân bằng)
-codex-web "Giải thích nguyên lý Event Loop trong JavaScript"
+# 1. Default query (Medium - balanced reasoning)
+codex-web "Explain how Node.js event loop handles Microtasks vs Macrotasks"
 
-# 2. Sử dụng Pro Mode cho suy luận kiến trúc phức tạp
-codex-web -m pro "Thiết kế kiến trúc hệ thống Pub/Sub quy mô 1 triệu CCU"
+# 2. Pro Mode for complex architectural system design
+codex-web -m pro "Design an idempotent distributed payment webhook processor in Go"
 
-# 3. Sử dụng Extra High / High cho bài toán thuật toán
-codex-web -m xhigh "Tối ưu hóa bài toán Traveling Salesperson với ràng buộc thời gian thực"
+# 3. Extra High / High for deep algorithmic problems
+codex-web -m xhigh "Optimize real-time Traveling Salesperson with hard time windows"
 
-# 4. Sử dụng Codex Native GPT-6-Astra cho code
-codex-web -m astra "Viết unit test coverage 100% cho file src/auth.service.ts"
+# 4. Codex Native GPT-6-Astra for code generation
+codex-web -m astra "Generate Jest unit tests with 100% branch coverage for auth.controller.ts"
 
-# 5. Phản hồi nhanh (Light)
-codex-web -m light "Chuyển mã SQL này sang Prisma schema"
+# 5. Fast response (Light)
+codex-web -m light "Convert this SQL schema into a Prisma schema"
 
-# 6. Pipe nội dung file vào CLI
-cat schema.prisma | codex-web -m pro "Review và chỉ ra các rủi ro hiệu năng"
+# 6. Pipe file contents directly
+cat schema.prisma | codex-web -m high "Review schema indexing and surface query performance risks"
 ```
 
 ---
 
-## Bảng So Sánh Các Model
+## Model Comparison Matrix
 
-| Model | Tham số CLI / Tool | Tốc độ | Độ sâu suy luận | Mục đích khuyên dùng |
+| Model Tier | CLI / Tool Param | Speed | Reasoning Depth | Recommended Use Cases |
 | :--- | :--- | :---: | :---: | :--- |
-| **ChatGPT Pro** | `pro` / `chatgpt-web/pro` | Chậm | Cực sâu (Max) | Kiến trúc phức tạp, thiết kế hệ thống lớn, debug lỗi trừu tượng |
-| **ChatGPT Extra High** | `xhigh` / `chatgpt-web/extra-high` | Vừa | Rất sâu | Toán học, thuật toán, bảo mật chuyên sâu |
-| **ChatGPT High** | `high` / `chatgpt-web/high` | Vừa | Sâu | Code review, tối ưu hiệu năng cơ sở dữ liệu |
-| **ChatGPT Medium** | `medium` / `chatgpt-web/medium` | Nhanh | Cân bằng | Tác vụ tổng quát, giải thích code, viết docstring (Mặc định) |
-| **ChatGPT Light** | `light` / `chatgpt-web/light` | Rất nhanh | Cơ bản | Format dữ liệu, sửa lỗi chính tả, convert cú pháp |
-| **Codex GPT-6-Astra** | `astra` / `gpt-6-astra` | Nhanh | Chuyên coding | Refactor code phức tạp, sinh unit test, code generation |
+| **ChatGPT Pro** | `pro` / `chatgpt-web/pro` | Deliberate | **Maximum (O1/Pro)** | High-complexity system design, distributed consensus, abstract debugging |
+| **ChatGPT Extra High** | `xhigh` / `chatgpt-web/extra-high` | Moderate | Very High | Advanced mathematical modeling, complex algorithmic optimizations |
+| **ChatGPT High** | `high` / `chatgpt-web/high` | Moderate | High | Security audits, deep code reviews, database query plan optimization |
+| **ChatGPT Medium** | `medium` / `chatgpt-web/medium` | Fast | Balanced *(Default)* | General programming, conceptual explanations, standard problem solving |
+| **ChatGPT Light** | `light` / `chatgpt-web/light` | Blazing Fast | Standard | Syntax conversions, regex authoring, quick data reformatting |
+| **Codex GPT-6-Astra** | `astra` / `gpt-6-astra` | Fast | High Code Specialization | Codex Native deep coding, AST refactoring, automated test generation |
 
 ---
 
-## Xử Lý Sự Cố (Troubleshooting)
+## Troubleshooting
 
-1. **Kiểm tra trạng thái cầu nối:**
+1. **Verify Bridge Health**:
    ```bash
    codex-web --status
    ```
-2. **Nếu cổng 17841 báo OFFLINE:**
-   - Đảm bảo bridge `codex-chatgpt-web` đang chạy trên máy (`lsof -i :17841`).
-   - Nếu chưa khởi động, hãy khởi động bridge theo hướng dẫn của `miuuyy/codex-chatgpt-web`.
-3. **Session hết hạn hoặc lỗi đăng nhập:**
-   - Mở giao diện trình duyệt điều khiển của bridge để làm mới phiên ChatGPT Web.
+2. **Port 17841 is OFFLINE**:
+   - Verify the daemon is running locally (`lsof -i :17841`).
+   - Start the bridge following `miuuyy/codex-chatgpt-web` instructions.
+3. **Session Expired or Cloudflare Challenge**:
+   - Open the browser controller window spawned by `codex-chatgpt-web` to refresh login credentials.

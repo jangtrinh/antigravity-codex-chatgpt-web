@@ -10,6 +10,8 @@
   "scripts": {
     "start": "node src/mcp-server.js",
     "test": "./bin/codex-web --help",
+    "demo": "node scripts/demo-session.js",
+    "demo:record": "vhs scripts/demo.tape",
     "install:bridge": "./install.sh",
     "uninstall:bridge": "./uninstall.sh"
   },
